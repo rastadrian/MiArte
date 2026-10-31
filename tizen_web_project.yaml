@@ -63,6 +63,7 @@ excludes:
   - tizen_web_project.yaml
   - webUnitTest/*
   - \.env
+  - \.env-template
   - \.git/.*
   - \.gitignore
   - Makefile

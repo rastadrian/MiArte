@@ -38,7 +38,7 @@ The Unsplash demo tier allows 50 requests/hour. The app makes one request per 30
 
 ## Configuration
 
-Device, signing and tooling settings live in `.env`, which the `Makefile` includes:
+Device, signing and tooling settings live in `.env`, which the `Makefile` includes. To get started, copy `.env-template` to `.env` and fill in the values:
 
 | Variable       | Purpose                                                   |
 | -------------- | --------------------------------------------------------- |
@@ -98,7 +98,7 @@ $TZ run -e $DEVICE .
 $SDB -s $DEVICE shell 0 vd_appuninstall 4rsM4dVtKo.MiArte
 ```
 
-`Makefile`, `.env`, `README.md`, `.git/` and `.gitignore` are listed under `excludes` in `tizen_web_project.yaml`, so they stay out of the `.wgt`. Add any other non-app files there too.
+`Makefile`, `.env`, `.env-template`, `README.md`, `.git/` and `.gitignore` are listed under `excludes` in `tizen_web_project.yaml`, so they stay out of the `.wgt`. Add any other non-app files there too.
 
 ## Testing in a desktop browser
 

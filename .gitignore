@@ -1,0 +1,50 @@
+.env
+
+# Build output (tz / Tizen Studio)
+Debug/
+Release/
+Test/
+Build/
+.buildResult/
+.package/
+.sign/
+.obj/
+.Build/
+*.wgt
+*.tpk
+
+# Tizen RDS (incremental deploy) and IDE metadata
+.tizen-rds/
+.rds_delta
+.sdk_delta.info
+.settings/
+.externalToolBuilders/
+.tizen-ui-builder-tool.xml
+
+# Signing material - never commit certificates or keys
+*.p12
+*.pri
+*.pwd
+*.crt
+*.csr
+author-signature.xml
+signature*.xml
+device-profile.xml
+
+# Local env overrides
+.env.local
+
+# Dependencies / tooling
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Editors / OS
+.vscode/
+.vs/
+.idea/
+*.vcxproj.user
+*.swp
+*~
+.DS_Store
+Thumbs.db

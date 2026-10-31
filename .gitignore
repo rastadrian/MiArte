@@ -1,5 +1,8 @@
 .env
 
+# Generated from .env by `make config` (contains the Unsplash access key)
+js/config.js
+
 # Build output (tz / Tizen Studio)
 Debug/
 Release/

@@ -1,5 +1,186 @@
-* {
+/* Sizes are in rem, and 1rem scales with the screen height (20px at 1080p),
+   so the layout looks the same at any TV resolution. */
+html {
+    font-size: calc(100vh / 54);
 }
-body {
-    background-color: #ffffff;
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    color: #fff;
+    font-family: "SamsungOne", "Samsung Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- Gallery ----------------------------------------------------------- */
+
+.stage {
+    position: absolute;
+    inset: 0;
+}
+
+.layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 3s ease-in-out; /* keep in sync with FADE_MS in gallery.js */
+}
+
+.layer.visible {
+    opacity: 1;
+}
+
+.credit {
+    position: absolute;
+    left: 2rem;
+    bottom: 1.5rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.4rem;
+    background: rgba(0, 0, 0, 0.35);
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.85);
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.credit.visible {
+    opacity: 1;
+}
+
+.status,
+.hint {
+    position: absolute;
+    left: 50%;
+    bottom: 3rem;
+    transform: translateX(-50%);
+    max-width: 70%;
+    padding: 0.8rem 1.4rem;
+    border-radius: 0.6rem;
+    background: rgba(0, 0, 0, 0.7);
+    font-size: 1rem;
+    text-align: center;
+}
+
+.status {
+    bottom: 6rem;
+    color: #ffd27a;
+}
+
+/* --- Settings ---------------------------------------------------------- */
+
+.settings {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.panel {
+    width: 46rem;
+    padding: 2.5rem 3rem;
+    border-radius: 1.2rem;
+    background: rgba(24, 24, 28, 0.94);
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.6);
+}
+
+.panel h1 {
+    margin: 0 0 2rem;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.row {
+    margin-bottom: 1.8rem;
+    padding: 1rem 1.2rem;
+    border-radius: 0.8rem;
+    border: 0.15rem solid transparent;
+}
+
+.row.focused {
+    border-color: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.label {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.options,
+.actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.option,
+.action {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: 0.15rem solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.6rem;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.option.selected {
+    background: #fff;
+    color: #111;
+    border-color: #fff;
+}
+
+.row.focused .option.selected,
+.action.focused {
+    box-shadow: 0 0 0 0.25rem #4ea1ff;
+}
+
+.action.focused {
+    background: #4ea1ff;
+    border-color: #4ea1ff;
+}
+
+.input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 0.15rem solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.6rem;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font: inherit;
+    font-size: 1.2rem;
+    outline: none;
+}
+
+.row.focused .input {
+    border-color: #4ea1ff;
+}
+
+.input:focus {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.help {
+    margin: 0.5rem 0 0;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
 }

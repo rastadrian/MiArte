@@ -1,11 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MiArte</title>
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
-    <script src="./main.js"></script>
+    <!-- Samsung TV web APIs (resolved by the Tizen runtime; missing in a desktop browser). -->
+    <script src="$WEBAPIS/webapis/webapis.js"></script>
 </head>
 <body>
+    <div id="stage" class="stage">
+        <img class="layer" alt="">
+        <img class="layer" alt="">
+    </div>
 
+    <div id="credit" class="credit"></div>
+    <div id="status" class="status hidden"></div>
+    <div id="hint" class="hint hidden">Press <strong>OK</strong> to open settings</div>
+
+    <div id="settings" class="settings hidden" role="dialog" aria-labelledby="settings-title">
+        <div class="panel">
+            <h1 id="settings-title">Settings</h1>
+
+            <div class="row" data-row="interval">
+                <div class="label">Change image every</div>
+                <div class="options">
+                    <button type="button" class="option" data-value="2">2 minutes</button>
+                    <button type="button" class="option" data-value="5">5 minutes</button>
+                    <button type="button" class="option" data-value="10">10 minutes</button>
+                </div>
+            </div>
+
+            <div class="row" data-row="query">
+                <label class="label" for="query-input">Unsplash search</label>
+                <input id="query-input" class="input" type="text" autocomplete="off" spellcheck="false"
+                       placeholder="e.g. Autumnal">
+            </div>
+
+            <div class="row actions" data-row="actions">
+                <button type="button" class="action" data-action="save">Save</button>
+                <button type="button" class="action" data-action="cancel">Cancel</button>
+            </div>
+
+            <p class="help">&#x2195; move &nbsp; &#x2194; change &nbsp; OK select &nbsp; Back close</p>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/keys.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/unsplash.js"></script>
+    <script src="js/gallery.js"></script>
+    <script src="js/settings-ui.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

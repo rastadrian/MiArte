@@ -3,9 +3,14 @@ include .env
 TZ     := $(TIZEN_SDK)/tizen-core/tz
 SDB    := $(TIZEN_SDK)/sdb
 DEVICE := $(DEVICE_IP):$(DEVICE_PORT)
-WGT    := $(BUILD_TYPE)/TuArte.wgt
+# tz names the package after the project folder, not output_name in tizen_web_project.yaml
+WGT    := $(BUILD_TYPE)/$(notdir $(CURDIR)).wgt
 
-.PHONY: all connect devices duid check-duid build install run deploy uninstall clean profiles help
+# App defaults (override in .env)
+DEFAULT_QUERY            ?= Autumnal
+DEFAULT_INTERVAL_MINUTES ?= 2
+
+.PHONY: all config connect devices duid check-duid build install run deploy uninstall clean profiles help
 
 all: deploy
 
@@ -27,7 +32,19 @@ check-duid: connect ## Verify device DUID matches .env and the distributor cert
 	if ! grep -q "$(DEVICE_DUID)" "$(CERT_DIR)/device-profile.xml"; then echo "DUID $(DEVICE_DUID) not in $(CERT_DIR)/device-profile.xml"; exit 1; fi; \
 	echo "DUID OK: $$actual ($(DEVICE_MODEL))"
 
-build: ## Build and sign the .wgt package
+config: ## Generate js/config.js from .env
+	$(if $(UNSPLASH_ACCESS_KEY),,$(error UNSPLASH_ACCESS_KEY is not set in .env))
+	@printf '%s\n' \
+		'// Generated from .env by `make config`. Do not edit or commit.' \
+		'window.MiArte = window.MiArte || {};' \
+		'window.MiArte.config = {' \
+		'    unsplashAccessKey: "$(UNSPLASH_ACCESS_KEY)",' \
+		'    defaultQuery: "$(DEFAULT_QUERY)",' \
+		'    defaultIntervalMinutes: $(DEFAULT_INTERVAL_MINUTES)' \
+		'};' > js/config.js
+	@echo "Wrote js/config.js"
+
+build: config ## Build and sign the .wgt package
 	$(TZ) build -s $(SIGN_PROFILE) -b $(BUILD_TYPE) .
 	$(TZ) pack .
 
@@ -40,7 +57,7 @@ run: connect ## Launch the app on the device
 deploy: build install run ## Build, install and launch
 
 uninstall: connect ## Remove the app from the device
-	$(TZ) uninstall -e $(DEVICE) -p $(PACKAGE_ID) .
+	$(SDB) -s $(DEVICE) shell 0 vd_appuninstall $(APP_ID)
 
 clean: ## Remove build output
 	rm -rf $(BUILD_TYPE) .buildResult
